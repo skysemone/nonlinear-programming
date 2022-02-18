@@ -12,6 +12,9 @@ x0 =[-2.9;-0.80;4];
 %run minimization with print-outs enabled
 [x_min,x_list]=linesearch_armijo_min(f,df,hf,x0);
 
+%or alternatively for the wolfe criteria...
+%[x_min,x_list]=linesearch_wolfe_min(f,df,hf,x0);
+
 %plot the function and the approximations from the trust-region min
 %   set x1, x2 values and make a grid
 x1 = -3:0.01:-1.0;
