@@ -7,11 +7,10 @@ df =@(x)[4*x(1).^3+9*x(1).^2-4*x(1)+x(2);4*x(2).^3+18*x(2)+x(1);2*x(3)];
 hf =@(x)[12*x(1).^2+18*x(1)-4,1,0;1,12*x(2).^2+18,0;0,0,2];
 
 %initial x point
-x0 =[-1.1;1.05;4];
+x0 =[-2.9;-0.80;4];
 
 %run minimization with print-outs enabled
-[x_min,x_list]=trust_region_min(f,df,hf,x0,'prt',1);
-
+[x_min,x_list]=linesearch_armijo_min(f,df,hf,x0);
 
 %plot the function and the approximations from the trust-region min
 %   set x1, x2 values and make a grid
