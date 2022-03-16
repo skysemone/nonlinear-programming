@@ -3,6 +3,11 @@ function [x_min,x_it]=linesearch_wolfe_min(f,df,hf,x0,varargin)
 %   given funciton, gradient, Hessian, and initial guess.  Input arguments
 %   are:
 %
+%   f:          function of n variables in vector length n
+%   df:         gradient in a 1-by-n size vector
+%   hf:         Hessian in n-by-n vector
+%   x0:         initial position for minimization
+%
 %   varargin:   optional arguments to set default parameters
 %
 %                  Parameter    Default     Description
@@ -72,7 +77,7 @@ function [x_min,x_it]=linesearch_wolfe_min(f,df,hf,x0,varargin)
         p=-hf(x)\df(x);
         x_k=x+alpha*p;
         
-        % Armijo condition
+        % Wolfe condition
         while(abs(p'*df(x_k))>eta*abs(p'*df(x))&&alpha>ep)
             alpha = r*alpha;
             x_k=x+alpha*p;

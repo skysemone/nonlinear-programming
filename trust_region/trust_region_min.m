@@ -5,6 +5,7 @@ function [x_min,x_it] = trust_region_min(f,df,hf,x0,varargin)
 %   f:          function of n variables in vector length n
 %   df:         gradient in a 1-by-n size vector
 %   hf:         Hessian in n-by-n vector
+%   x0:         initial position for minimization
 %
 %   varargin:   optional arguments to set default parameters
 %
@@ -68,14 +69,14 @@ function [x_min,x_it] = trust_region_min(f,df,hf,x0,varargin)
     %functions used to assess predicted change
     phi=@(x,p) f(x)+df(x)'*p+0.5*p'*hf(x)*p;
     rho =@(x,p) (f(x)-f(x+p))/(f(x)-phi(x,p));
-    
+    g=@(l) norm((hf(x)+l*eye(x_size))\df(x))-trb;
+
     %main loop
     while(norm(df(x))>ep && it<itmax)
     
         %determine predicted change p and rescale if greater than threshold
         p=-hf(x)\df(x);
         if trb<norm(p)
-            g=@(l) norm((hf(x)+l*eye(x_size))\df(x))-trb;
             lambda = fzero(g,0.9);
             p=-(hf(x)+lambda*eye(x_size))\df(x);
         end
